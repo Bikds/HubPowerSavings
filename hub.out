@@ -1,0 +1,120 @@
+-----------------------------------
+Enter the Hub configuration in `hub_config.in' file
+Expected format: Upstream Port (UP) width, frequency for USB3+ (expected to have USB2)
+	 followed by no of downstream ports followed by for DP the USB Type, width, frequency,
+	 Upstream B/W demand, Downstream B/W demand (example below)
+hub_config.in Format as follows ...
+2, 20 // Line 1: Means x2 at 20G for UP
+4 // Line 2: No of downstream Ports in Hub is 4 - this means 4 more lines as follows
+3 1 5 2.0 0.4: Downstream Port 0 is USB 3; 1 wide; 5 GT/s,
+	Upstream B/W demand 2.0 Gb/s, and Downstream B/W demand of 0.4 Gb/s
+2 0 0 0.5 0.1: Downstream Port 1 is USB 2; next two numbers are dont care,
+	 Upstream utilization of 0.5, and DOwnstream Utilization of 0.1
+3 2 10 10.0 18.0: Downstream Port 2 is USB 3.2; 2 wide; 10 GT/s,
+	 Upstream B/W demand is 10 Gb/s, and Downstream B/W demand is 18.0 Gb/s
+4 2 20 20.0 36.0: Downstream Port 3 is USB 4; 2 wide; 20 GT/s,
+	 Upstream B/W demand is 20.0 Gb/s, and Downstream B/W demand is 36.0 Gb/s
+-----------------------------------
+USB Hub Specification considered:
+UP: x2, 20GT/s, 4 Downstream Ports
+DP 0: USB 3, width: 2, 10 GT/s, Util (18.000000 up, 2.000000 dn)
+DP 1: USB 3, width: 1, 4 GT/s, Util (2.000000 up, 0.400000 dn)
+DP 2: USB 4, width: 2, 20 GT/s, Util (36.000000 up, 36.000000 dn)
+DP 3: USB 4, width: 2, 20 GT/s, Util (28.000000 up, 36.000000 dn)
+Net UP B/W (40.000000 up, 40.000000 dn) vs net demand by DP ports (84.000000 up, 74.400000 dn) vs raw b/w demand in DP 104.000000 in each direction
+----Raw B/W Allocation to DP based on width/ frequency -------
+DP Port 0: Raw Util: 0.192308
+DP Port 1: Raw Util: 0.038462
+DP Port 2: Raw Util: 0.384615
+DP Port 3: Raw Util: 0.384615
+Total Raw B/W allot fraction: 1.000000
+---------------------
+-----First Pass B/W allocation to DP ports-----
+DP 0: UP B/W: 0.000000 (demand met=0), DN B/W: 2.000000 (demand met = 1)
+DP 1: UP B/W: 0.000000 (demand met=0), DN B/W: 0.400000 (demand met = 1)
+DP 2: UP B/W: 0.000000 (demand met=0), DN B/W: 0.000000 (demand met = 0)
+DP 3: UP B/W: 0.000000 (demand met=0), DN B/W: 0.000000 (demand met = 0)
+B/W allotted after first pass: 0.000000 up, 2.400000 dn
+B/W remaining to allot in second pass: 40.000000 up, 37.600000 dn
+Raw B/W fractions remaining (1.000000 up, 0.769231 dn)
+-----Final Pass B/W allocation to DP ports-----
+DP Port: 0, UP B/W: 7.692308 (util: 0.384615), DN B/W: 2.000000 (util: 0.100000), Link Util: 0.384615
+DP Port: 1, UP B/W: 1.538462 (util: 0.384615), DN B/W: 0.400000 (util: 0.100000), Link Util: 0.384615
+DP Port: 2, UP B/W: 15.384615 (util: 0.384615), DN B/W: 18.800000 (util: 0.470000), Link Util: 0.470000
+DP Port: 3, UP B/W: 15.384615 (util: 0.384615), DN B/W: 18.800000 (util: 0.470000), Link Util: 0.470000
+Aggr B/w Allotted: (40.000000 up, 40.000000 dn)
+Hub UP utilization: up: 1.000000, dn: 1.000000, link: 1.000000
+----------------------------------------------
+Power Savings with U2 (Entry L1: 10.000000 us, Exit L1: 90.000000 us
+----------------------------------------------
+------- Power Savings with 125.000000 us scheduling interval ---
+Hub UP: Util 1.000000: U1: (frac: 0.000000, Power Savings U1: 0.000000), U2: (frac: 0.000000, Power Savings U2: 0.000000), U3: (frac: 0.000000, Power Savings U3: 0.000000)
+Hub DP:0:  Util 0.384615: U1: (frac: 0.582585, Power Savings U1: 2.039046), U2: (frac: 0.000000, Power Savings U2: 0.000000), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:1:  Util 0.384615: U1: (frac: 0.582585, Power Savings U1: 2.039046), U2: (frac: 0.000000, Power Savings U2: 0.000000), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:2:  Util 0.470000: U1: (frac: 0.497200, Power Savings U1: 1.740200), U2: (frac: 0.000000, Power Savings U2: 0.000000), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:3:  Util 0.470000: U1: (frac: 0.497200, Power Savings U1: 1.740200), U2: (frac: 0.000000, Power Savings U2: 0.000000), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Total HUB power savings: U1: 7.558492, U2: 0.000000, U3: 0.000000
+------- Power Savings with 250.000000 us scheduling interval ---
+Hub UP: Util 1.000000: U1: (frac: 0.000000, Power Savings U1: 0.000000), U2: (frac: 0.000000, Power Savings U2: 0.000000), U3: (frac: 0.000000, Power Savings U3: 0.000000)
+Hub DP:0:  Util 0.384615: U1: (frac: 0.598985, Power Savings U1: 2.096446), U2: (frac: 0.215385, Power Savings U2: 0.947692), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:1:  Util 0.384615: U1: (frac: 0.598985, Power Savings U1: 2.096446), U2: (frac: 0.215385, Power Savings U2: 0.947692), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:2:  Util 0.470000: U1: (frac: 0.513600, Power Savings U1: 1.797600), U2: (frac: 0.130000, Power Savings U2: 0.572000), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:3:  Util 0.470000: U1: (frac: 0.513600, Power Savings U1: 1.797600), U2: (frac: 0.130000, Power Savings U2: 0.572000), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Total HUB power savings: U1: 7.788092, U2: 3.039385, U3: 0.000000
+------- Power Savings with 375.000000 us scheduling interval ---
+Hub UP: Util 1.000000: U1: (frac: 0.000000, Power Savings U1: 0.000000), U2: (frac: 0.000000, Power Savings U2: 0.000000), U3: (frac: 0.000000, Power Savings U3: 0.000000)
+Hub DP:0:  Util 0.384615: U1: (frac: 0.604451, Power Savings U1: 2.115579), U2: (frac: 0.348718, Power Savings U2: 1.534359), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:1:  Util 0.384615: U1: (frac: 0.604451, Power Savings U1: 2.115579), U2: (frac: 0.348718, Power Savings U2: 1.534359), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:2:  Util 0.470000: U1: (frac: 0.519067, Power Savings U1: 1.816733), U2: (frac: 0.263333, Power Savings U2: 1.158667), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:3:  Util 0.470000: U1: (frac: 0.519067, Power Savings U1: 1.816733), U2: (frac: 0.263333, Power Savings U2: 1.158667), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Total HUB power savings: U1: 7.864626, U2: 5.386051, U3: 0.000000
+------- Power Savings with 500.000000 us scheduling interval ---
+Hub UP: Util 1.000000: U1: (frac: 0.000000, Power Savings U1: 0.000000), U2: (frac: 0.000000, Power Savings U2: 0.000000), U3: (frac: 0.000000, Power Savings U3: 0.000000)
+Hub DP:0:  Util 0.384615: U1: (frac: 0.607185, Power Savings U1: 2.125146), U2: (frac: 0.415385, Power Savings U2: 1.827692), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:1:  Util 0.384615: U1: (frac: 0.607185, Power Savings U1: 2.125146), U2: (frac: 0.415385, Power Savings U2: 1.827692), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:2:  Util 0.470000: U1: (frac: 0.521800, Power Savings U1: 1.826300), U2: (frac: 0.330000, Power Savings U2: 1.452000), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:3:  Util 0.470000: U1: (frac: 0.521800, Power Savings U1: 1.826300), U2: (frac: 0.330000, Power Savings U2: 1.452000), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Total HUB power savings: U1: 7.902892, U2: 6.559385, U3: 0.000000
+------- Power Savings with 625.000000 us scheduling interval ---
+Hub UP: Util 1.000000: U1: (frac: 0.000000, Power Savings U1: 0.000000), U2: (frac: 0.000000, Power Savings U2: 0.000000), U3: (frac: 0.000000, Power Savings U3: 0.000000)
+Hub DP:0:  Util 0.384615: U1: (frac: 0.608825, Power Savings U1: 2.130886), U2: (frac: 0.455385, Power Savings U2: 2.003692), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:1:  Util 0.384615: U1: (frac: 0.608825, Power Savings U1: 2.130886), U2: (frac: 0.455385, Power Savings U2: 2.003692), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:2:  Util 0.470000: U1: (frac: 0.523440, Power Savings U1: 1.832040), U2: (frac: 0.370000, Power Savings U2: 1.628000), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:3:  Util 0.470000: U1: (frac: 0.523440, Power Savings U1: 1.832040), U2: (frac: 0.370000, Power Savings U2: 1.628000), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Total HUB power savings: U1: 7.925852, U2: 7.263385, U3: 0.000000
+------- Power Savings with 750.000000 us scheduling interval ---
+Hub UP: Util 1.000000: U1: (frac: 0.000000, Power Savings U1: 0.000000), U2: (frac: 0.000000, Power Savings U2: 0.000000), U3: (frac: 0.000000, Power Savings U3: 0.000000)
+Hub DP:0:  Util 0.384615: U1: (frac: 0.609918, Power Savings U1: 2.134713), U2: (frac: 0.482051, Power Savings U2: 2.121026), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:1:  Util 0.384615: U1: (frac: 0.609918, Power Savings U1: 2.134713), U2: (frac: 0.482051, Power Savings U2: 2.121026), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:2:  Util 0.470000: U1: (frac: 0.524533, Power Savings U1: 1.835867), U2: (frac: 0.396667, Power Savings U2: 1.745333), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:3:  Util 0.470000: U1: (frac: 0.524533, Power Savings U1: 1.835867), U2: (frac: 0.396667, Power Savings U2: 1.745333), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Total HUB power savings: U1: 7.941159, U2: 7.732718, U3: 0.000000
+------- Power Savings with 875.000000 us scheduling interval ---
+Hub UP: Util 1.000000: U1: (frac: 0.000000, Power Savings U1: 0.000000), U2: (frac: 0.000000, Power Savings U2: 0.000000), U3: (frac: 0.000000, Power Savings U3: 0.000000)
+Hub DP:0:  Util 0.384615: U1: (frac: 0.610699, Power Savings U1: 2.137446), U2: (frac: 0.501099, Power Savings U2: 2.204835), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:1:  Util 0.384615: U1: (frac: 0.610699, Power Savings U1: 2.137446), U2: (frac: 0.501099, Power Savings U2: 2.204835), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:2:  Util 0.470000: U1: (frac: 0.525314, Power Savings U1: 1.838600), U2: (frac: 0.415714, Power Savings U2: 1.829143), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:3:  Util 0.470000: U1: (frac: 0.525314, Power Savings U1: 1.838600), U2: (frac: 0.415714, Power Savings U2: 1.829143), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Total HUB power savings: U1: 7.952092, U2: 8.067956, U3: 0.000000
+------- Power Savings with 1000.000000 us scheduling interval ---
+Hub UP: Util 1.000000: U1: (frac: 0.000000, Power Savings U1: 0.000000), U2: (frac: 0.000000, Power Savings U2: 0.000000), U3: (frac: 0.000000, Power Savings U3: 0.000000)
+Hub DP:0:  Util 0.384615: U1: (frac: 0.611285, Power Savings U1: 2.139496), U2: (frac: 0.515385, Power Savings U2: 2.267692), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:1:  Util 0.384615: U1: (frac: 0.611285, Power Savings U1: 2.139496), U2: (frac: 0.515385, Power Savings U2: 2.267692), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:2:  Util 0.470000: U1: (frac: 0.525900, Power Savings U1: 1.840650), U2: (frac: 0.430000, Power Savings U2: 1.892000), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:3:  Util 0.470000: U1: (frac: 0.525900, Power Savings U1: 1.840650), U2: (frac: 0.430000, Power Savings U2: 1.892000), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Total HUB power savings: U1: 7.960292, U2: 8.319385, U3: 0.000000
+------- Power Savings with 1125.000000 us scheduling interval ---
+Hub UP: Util 1.000000: U1: (frac: 0.000000, Power Savings U1: 0.000000), U2: (frac: 0.000000, Power Savings U2: 0.000000), U3: (frac: 0.000000, Power Savings U3: 0.000000)
+Hub DP:0:  Util 0.384615: U1: (frac: 0.611740, Power Savings U1: 2.141091), U2: (frac: 0.526496, Power Savings U2: 2.316581), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:1:  Util 0.384615: U1: (frac: 0.611740, Power Savings U1: 2.141091), U2: (frac: 0.526496, Power Savings U2: 2.316581), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:2:  Util 0.470000: U1: (frac: 0.526356, Power Savings U1: 1.842244), U2: (frac: 0.441111, Power Savings U2: 1.940889), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:3:  Util 0.470000: U1: (frac: 0.526356, Power Savings U1: 1.842244), U2: (frac: 0.441111, Power Savings U2: 1.940889), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Total HUB power savings: U1: 7.966670, U2: 8.514940, U3: 0.000000
+------- Power Savings with 1250.000000 us scheduling interval ---
+Hub UP: Util 1.000000: U1: (frac: 0.000000, Power Savings U1: 0.000000), U2: (frac: 0.000000, Power Savings U2: 0.000000), U3: (frac: 0.000000, Power Savings U3: 0.000000)
+Hub DP:0:  Util 0.384615: U1: (frac: 0.612105, Power Savings U1: 2.142366), U2: (frac: 0.535385, Power Savings U2: 2.355692), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:1:  Util 0.384615: U1: (frac: 0.612105, Power Savings U1: 2.142366), U2: (frac: 0.535385, Power Savings U2: 2.355692), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:2:  Util 0.470000: U1: (frac: 0.526720, Power Savings U1: 1.843520), U2: (frac: 0.450000, Power Savings U2: 1.980000), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Hub DP:3:  Util 0.470000: U1: (frac: 0.526720, Power Savings U1: 1.843520), U2: (frac: 0.450000, Power Savings U2: 1.980000), U3: (frac: 0.000000, Power Savings U3: 0.000000),
+Total HUB power savings: U1: 7.971772, U2: 8.671385, U3: 0.000000
+-------------
