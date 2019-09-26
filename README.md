@@ -1,8 +1,12 @@
 # HubPowerSavings
 C Program for USB Hub Power Savings
 
-"hub_sweeps_configs.c" is the C file which calculates the total power savings using the dynamic algorithm. 
+"hub_power_scheduling.c" is the C program which calculates the total power savings using our proposed dynamic scheduling algorithm.
 
-The file "hub_config.h" declares the constants used in the C file. 
+The file "hub_config.h" defines some of the values used by the program such as the power consumption in various states and the entry and exit times for the various low-power states.
 
-"hub_config.in" provides sample input values for the C file to read and calculate the power savings for. "hub.out" contains the results from "hub_sweeps_configs.c" when it is run with the values in "hub_config.in".
+"hub_config.in" provides the set of input values representing the link width and frequency of each DFP and UFP, along with the bandwidth demand for each DFP in each direction. 
+
+The C program computes the power savings for various scenarios, including scheduling interval for each of the low power states. The output is printed on the screen. The system designer can choose to include this scheduling algorithm and control the power savings dynamically in a real system. 
+
+"hub.out" contains the results of our program "hub_power_scheduling.c" for "hub_config.h" and "hub_config.in" by redirecting the screen output to "hub.out". This is provided to give the reader an idea of the type of output to expect without having to run the program.
