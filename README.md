@@ -1,4 +1,15 @@
 # HubPowerSavings
+
+C Program to calculate USB Hub Power Savings.
+
+"hub_power_scheduling_bulkisoc.c" is the C program which simulates and outputs the calculation of power savings using the proposed dynamic scheduling algorithm, taking into account whether traffic is isochronous or bulk.
+
+"hub_config_bulkandisoc.h" contains values used by the program, including entry/exit latencies and power savings in each Ux state.
+
+"hub_config_bulkandisoc.in" provides the set of input values specifying information about the various downstream ports, including upstream/downstream traffic for both bulk and isochronus traffic.
+
+
+BULK ONLY:
 C Program for USB Hub Power Savings
 
 "hub_power_scheduling.c" is the C program which calculates the total power savings using our proposed dynamic scheduling algorithm.
