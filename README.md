@@ -1,5 +1,7 @@
 # HubPowerSavings
 
+BULK and ISOC Traffic:
+
 C Program to calculate USB Hub Power Savings.
 
 "hub_power_scheduling_bulkisoc.c" is the C program which simulates and outputs the calculation of power savings using the proposed dynamic scheduling algorithm, taking into account whether traffic is isochronous or bulk.
